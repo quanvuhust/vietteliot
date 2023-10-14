@@ -126,5 +126,5 @@ python ensemble.py
 ```
 python post.py
 ```
-* Inference notebook: https://www.kaggle.com/code/huyduong7101/vhac2023-ocr-inference
-* Weights: https://www.kaggle.com/datasets/quan0095/tablerecognitionmodel
+* Inference single model notebook: https://www.kaggle.com/code/quan0095/private-iot-single-model
+* Weights: https://www.kaggle.com/datasets/quan0095/iotmodels/
