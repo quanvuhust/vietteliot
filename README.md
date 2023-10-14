@@ -55,18 +55,18 @@ process_data/
     ├── train_clean.json
 ```
 * Huấn luyện pha 1
-** Huấn luyện 3 epoch đầu, sau khi hoàn thành 3 epoch đầu thì ngắt training
+Huấn luyện 3 epoch đầu, sau khi hoàn thành 3 epoch đầu thì ngắt training
 ```
 cd train/det
 python train.py --config configs/custom/config_0.py --deterministic
 ```
-** Loại bỏ optimizer state_dict ra khỏi weight:
+Loại bỏ optimizer state_dict ra khỏi weight:
 ```
 cp convert.py ../workdirs/
 cd ../workdirs/
 python convert.py
 ```
-** Huấn luyện 9 epoch cuối
+Huấn luyện 9 epoch cuối
 ```
 python train.py --config configs/custom/config_1.py --deterministic
 
