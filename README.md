@@ -55,6 +55,7 @@ process_data/
     ├── train_clean.json
 ```
 * Huấn luyện pha 1
+
 Huấn luyện 3 epoch đầu, sau khi hoàn thành 3 epoch đầu thì ngắt training
 ```
 cd train/det
