@@ -9,7 +9,7 @@ _base_ = [
     '../_base_/schedules/schedule_1x.py',
 ]
 pretrained = '/source_code/det/internimage_l_22k_192to384.pth'
-load_from= '../workdirs/ema_model/epoch_12.pth'
+load_from= '../workdirs/checkpoints/epoch_12.pth'
 
 model = dict(
     type='DINO',
@@ -180,20 +180,20 @@ data = dict(
     train=dict(
         type=dataset_type,
         classes=classes,
-        ann_file="../train_clean.json",
-        img_prefix='../train/images',
+        ann_file="../../process_data/train.json",
+        img_prefix='../../process_data/train/images',
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
         classes=classes,
-        ann_file="../train_clean.json",
-        img_prefix='../train/images',
+        ann_file="../../process_data/train.json",
+        img_prefix='../../process_data/train/images',
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
         classes=classes,
-        ann_file="../train_clean.json",
-        img_prefix='../train/images',
+        ann_file="../../process_data/train.json",
+        img_prefix='../../process_data/train/images',
         pipeline=test_pipeline)
 )
 

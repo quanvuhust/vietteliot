@@ -1,0 +1,8 @@
+{
+  "image_scale_h": 612,
+  "image_scale_w": 1024,
+  "is_hflip": true,
+  "model_path": "weights/epoch7.pth",
+  "config_path": "weights/config.py",
+  "result_path": "results_epoch7_ema_TTA.csv"
+}

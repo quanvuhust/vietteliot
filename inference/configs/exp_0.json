@@ -1,0 +1,8 @@
+{
+    "image_scale_h": 612,
+    "image_scale_w": 1024,
+    "is_hflip": false,
+    "model_path": "weights/internimages_large_dino_epoch_8.pth",
+    "config_path": "weights/config.py",
+    "result_path": "results_epoch8_noTTA.csv"
+  }

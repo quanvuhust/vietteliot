@@ -9,7 +9,7 @@ _base_ = [
     '../_base_/schedules/schedule_1x.py',
 ]
 pretrained = 'https://huggingface.co/OpenGVLab/InternImage/resolve/main/internimage_l_22k_192to384.pth'
-load_from= '../workdirs/checkpoints/epoch_12.pth'
+load_from= '../dino_4scale_internimage_l_1x_coco_0.1x_backbone_lr.pth'
 
 model = dict(
     type='DINO',
@@ -25,7 +25,7 @@ model = dict(
         layer_scale=1.0,
         offset_scale=2.0,
         post_norm=True,
-        with_cp=True,
+        with_cp=False,
         out_indices=(1, 2, 3),
         init_cfg=dict(type='Pretrained', checkpoint=pretrained)),
     neck=dict(
@@ -117,10 +117,9 @@ train_pipeline = [
          policies=[
              [
                  dict(type='Resize',
-                      img_scale=[(372, 1024), (396, 1024), (420, 1024),
-                               (444, 1024), (468, 1024), (492, 1024),
-                               (516, 1024), (540, 1024), (564, 1024),
-                               (588, 1024), (612, 1024)],
+                      img_scale=[(300, 768), (316, 768), (332, 768), (348, 768),
+                          (364, 768), (380, 768), (396, 768), (412, 768),
+                          (428, 768), (444, 768), (460, 768)],
                       multiscale_mode='value')
              ],
              [
@@ -132,10 +131,10 @@ train_pipeline = [
                       crop_size=(384, 600),
                       allow_negative_crop=False),
                  dict(type='Resize',
-                      img_scale=[(372, 1024), (396, 1024), (420, 1024),
-                               (444, 1024), (468, 1024), (492, 1024),
-                               (516, 1024), (540, 1024), (564, 1024),
-                               (588, 1024), (612, 1024)],
+                      img_scale=[(300, 768), (316, 768), (332, 768),
+                                    (348, 768), (364, 768), (380, 768),
+                                    (396, 768), (412, 768), (428, 768),
+                                    (444, 768), (460, 768)],
                       multiscale_mode='value',
                       override=True)
              ]
@@ -149,7 +148,7 @@ test_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(
         type='MultiScaleFlipAug',
-        img_scale=(612, 1024),
+        img_scale=(460, 768),
         flip=False,
         transforms=[
             dict(type='Resize'),
@@ -197,10 +196,10 @@ data = dict(
         pipeline=test_pipeline)
 )
 
-runner = dict(type='EpochBasedRunner', max_epochs=3)
+runner = dict(type='EpochBasedRunner', max_epochs=12)
 # optimizer
 optimizer = dict(
-    _delete_=True, type='AdamW', lr=0.00001, weight_decay=0.05,
+    _delete_=True, type='AdamW', lr=0.0001, weight_decay=0.05,
     paramwise_cfg=dict(
         custom_keys={
             'backbone': dict(lr_mult=0.1),
@@ -212,12 +211,12 @@ lr_config = dict(
     warmup='linear',
     warmup_iters=500,
     warmup_ratio=0.001,
-    step=[4])
-evaluation = dict(save_best='auto', interval=3)
+    step=[11])
+evaluation = dict(save_best='auto', interval=12)
 checkpoint_config = dict(
     interval=1,
-    max_keep_ckpts=3,
+    max_keep_ckpts=12,
     save_last=True,
 )
 
-work_dir = '../workdirs_finetune/'
+work_dir = '../workdirs'

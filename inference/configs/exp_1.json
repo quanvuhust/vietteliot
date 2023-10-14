@@ -1,0 +1,8 @@
+{
+  "image_scale_h": 612,
+  "image_scale_w": 1024,
+  "is_hflip": true,
+  "model_path": "weights/internimages_finetune_epoch_3.pth",
+  "config_path": "weights/config.py",
+  "result_path": "results_finetune_epoch3_TTA.csv"
+}

@@ -9,6 +9,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import cv2
+import argparse
 
 import sys
 sys.path.append("../train/det")
@@ -19,14 +20,24 @@ import mmdet_custom
 import torch
 
 from mmcv import Config
+
+
+parser = argparse.ArgumentParser(description="test code")
+parser.add_argument("--exp", type=str, default="exp_0")
+args = parser.parse_args()
+
+f = open(os.path.join('configs', "{}.json".format(args.exp)))
+configs = json.load(f)
+f.close()
+
 intern_config_files = [
-    'config.py'
+    configs['config_path']
                       ]
 intern_weight_files = [
-    'epoch_2.pth'
+    configs['model_path']
 ]
 intern_image_sizes = [
-    [(612, 1024)]
+    [(configs['image_scale_h'], configs['image_scale_w'])]
                      ]
 
 device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
@@ -39,7 +50,7 @@ for weight_file, config_file, image_size in zip(intern_weight_files, intern_conf
     model = init_detector(cfg, weight_file, device=device)
     intern_models.append(model)
 
-all_imgs = glob.glob('IOT_private_test/images/*.jpg')
+all_imgs = glob.glob('private_test/images/*.jpg')
 
 import mmcv
 import matplotlib.pyplot as plt
@@ -60,7 +71,8 @@ for i in tqdm(range(len(all_imgs))):
     image_id = all_imgs[i].split("/")[-1].replace(".jpg", "")
     image = cv2.imread(all_imgs[i])
     image = np.ascontiguousarray(image)
-    # image = cv2.flip(image, 1)
+    if configs['is_hflip'] == True:
+        image = cv2.flip(image, 1)
     img_batch.append(image)
     image_id_batch.append(image_id)
 
@@ -83,9 +95,15 @@ for i in tqdm(range(len(all_imgs))):
                     image_id_csv.append(image_id)
                     class_id_csv.append(int(new_class_id))
                     confidence_score_csv.append(result[4])
-                    x_min_csv.append(result[0])
+                    if configs['is_hflip'] == True:
+                        x_min_csv.append(w-result[0])
+                    else:
+                        x_min_csv.append(result[0])
                     y_min_csv.append(result[1])
-                    x_max_csv.append(result[2])
+                    if configs['is_hflip'] == True:
+                        x_max_csv.append(w-result[2])
+                    else:
+                        x_max_csv.append(result[2])
                     y_max_csv.append(result[3])
 
         del img_batch
@@ -109,4 +127,4 @@ x_max_csv = np.expand_dims(x_max_csv, 1)
 y_max_csv = np.expand_dims(y_max_csv, 1)
 
 df = pd.DataFrame(np.concatenate((image_id_csv, class_id_csv, confidence_score_csv, x_min_csv, y_min_csv, x_max_csv, y_max_csv), axis=1), columns=["image_id", "class_id", "confidence_score", "x_min", "y_min", "x_max", "y_max"])
-df.to_csv('results_epoch2_ema_noTTA.csv', index=False)
+df.to_csv(configs['result_path'], index=False)

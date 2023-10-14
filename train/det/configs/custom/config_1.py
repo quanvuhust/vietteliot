@@ -180,20 +180,20 @@ data = dict(
     train=dict(
         type=dataset_type,
         classes=classes,
-        ann_file="../train.json",
-        img_prefix='../train/images',
+        ann_file="../../process_data/train.json",
+        img_prefix='../../process_data/train/images',
         pipeline=train_pipeline),
     val=dict(
         type=dataset_type,
         classes=classes,
-        ann_file="../train.json",
-        img_prefix='../train/images',
+        ann_file="../../process_data/train.json",
+        img_prefix='../../process_data/train/images',
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
         classes=classes,
-        ann_file="../train.json",
-        img_prefix='../train/images',
+        ann_file="../../process_data/train.json",
+        img_prefix='../../process_data/train/images',
         pipeline=test_pipeline)
 )
 
@@ -219,5 +219,5 @@ checkpoint_config = dict(
     max_keep_ckpts=12,
     save_last=True,
 )
-
-work_dir = './workdirs/'
+resume_from = '../workdirs/epoch_3.pth'
+work_dir = '../workdirs/'
