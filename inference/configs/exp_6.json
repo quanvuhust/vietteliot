@@ -2,7 +2,7 @@
   "image_scale_h": 612,
   "image_scale_w": 1024,
   "is_hflip": true,
-  "model_path": "weights/epoch2.pth",
+  "model_path": "weights/epoch_2.pth",
   "config_path": "weights/config.py",
   "result_path": "results_epoch2_ema_TTA.csv"
 }
