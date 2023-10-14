@@ -1,6 +1,5 @@
 # vietteliot
  VHAC 2023 - AI for IoT
- # Cài đặt môi trường
 # Cài đặt môi trường
  CUDA drive 12.0\
  Docker images: nvcr.io/nvidia/pytorch:23.08-py3
