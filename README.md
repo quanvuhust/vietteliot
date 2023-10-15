@@ -129,5 +129,5 @@ python post.py
 * Inference single model notebook: https://www.kaggle.com/code/quan0095/private-iot-single-model
 * Weights: https://www.kaggle.com/datasets/quan0095/iotmodels/
 # Authors
-Vũ Minh Quân (quanvm4@viettel.com.vn)
+Vũ Minh Quân (quanvm4@viettel.com.vn)\
 Lê Huy Dương (duonglh9@viettel.com.vn)
