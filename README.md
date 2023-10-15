@@ -124,6 +124,9 @@ python ensemble.py
 ```
 * Postprocess để lọc bớt box để có thể submit
 ```
+# Authors
+Vũ Minh Quân (quanvm4@viettel.com.vn)
+Lê Huy Dương (duonglh9@viettel.com.vn)
 python post.py
 ```
 * Inference single model notebook: https://www.kaggle.com/code/quan0095/private-iot-single-model
